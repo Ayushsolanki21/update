@@ -1,91 +1,85 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { deletecart, incrementQuantity, decrementQuantity } from './redux/Cartsytem';
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { deletecart, incrementQuantity, decrementQuantity } from "./redux/Cartsytem";
 
 const Cart = () => {
-  const cartItems = useSelector((state) => state.cart); 
+  const cartItems = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
   const handleDelete = (itemId) => {
-    dispatch(deletecart({ _id: itemId })); 
+    dispatch(deletecart({ _id: itemId }));
   };
 
   const handleIncrement = (itemId) => {
-    console.log('Increment item ID:', itemId); // Debugging statement
     dispatch(incrementQuantity({ _id: itemId }));
   };
 
   const handleDecrement = (itemId) => {
-    console.log('Decrement item ID:', itemId); // Debugging statement
     dispatch(decrementQuantity({ _id: itemId }));
   };
 
   const totalPrice = cartItems
-    .filter(item => typeof item.price === 'number')
-    .reduce((total, item) => total + item.price * item.quantity, 0); // Calculate total price with quantity
-  
+    .filter((item) => typeof item.price === "number")
+    .reduce((total, item) => total + item.price * item.quantity, 0);
+
   return (
-    <div className="flex flex-col items-center p-8 bg-[#EBE4DB] min-h-screen ">
-      <h1 className="text-3xl font-semibold mb-6 mt-10">Shopping Cart</h1>
-     
-  
-      {cartItems.length === 0 ? (
-        <p className="text-lg text-gray-500">Your cart is empty</p>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-4xl">
-          {cartItems.map((item, index) => (
-            <div
-              key={index}
-              className="bg-white border border-gray-200 p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-200 ease-in-out"
-            >
+    <div className="p-4 max-w-xl mx-auto z-0">
+      <div className="bg-white shadow-lg rounded-lg mt-10 ">
+        <div className="flex items-center justify-between px-4 py-3 bg-[#C3AA80]">
+          <h1 className="text-lg font-bold">Shopping Cart</h1>
+          <span className="text-[#C3AA80]">({cartItems.length} items)</span>
+        </div>
+
+        <div className="p-4">
+          {cartItems.map((item) => (
+            <div key={item._id} className="flex items-center mb-4">
               <img
-              src={`http://localhost:5001${item.image}`} // Use the image property for the product image
-              alt={item.name}
-              className="w-full h-40 object-cover rounded-lg mb-4" // Adjust size as needed
-            />
-              <h2 className="text-xl font-semibold text-gray-800 mb-2">{item.name}</h2>
-              <p className="text-gray-700 mb-1">Price: <span className="font-medium">${item.price}</span></p>
-              <p className="text-gray-700 mb-1">Quantity: <span className="font-medium">{item.quantity}</span></p>
-              <p className="text-gray-700 mb-1">Category: <span className="font-medium">{item.category}</span></p>
-              <p className="text-gray-700 mb-4">Company: <span className="font-medium">{item.company}</span></p>
-              
-              <div className='flex mb-2'>
-              <button 
-                  className='bg-[#C3AA80] hover:bg-[#ebe9E1] text-white font-semibold w-20 mr-5 rounded'
-                  onClick={() => handleDecrement(item._id)}
-                >
-                  -
-                </button>
-                <h1 className="font-medium">{item.quantity}</h1>
-              
-                <button 
-                  className='bg-[#C3AA80] hover:bg-[#ebe9E1] text-white font-semibold w-20 ml-5 rounded'
-                  onClick={() => handleIncrement(item._id)}
-                >
-                  +
-                </button>
+                className="h-16 w-16 object-contain rounded-lg mr-4"
+                src={`http://localhost:5001${item.image}`}
+                alt={item.name}
+              />
+              <div className="flex-1">
+                <h2 className="text-lg font-bold">{item.name}</h2>
+                <span className="text-gray-600">${item.price.toFixed(2)}</span>
+                <div className="flex items-center mt-2">
+                  <button
+                    className="px-2 py-1 bg-[#F2EDE6] rounded hover:bg-gray-400"
+                    onClick={() => handleDecrement(item._id)}
+                  >
+                    -
+                  </button>
+                  <span className="mx-2">{item.quantity}</span>
+                  <button
+                    className="px-2 py-1 bg-[#F2EDE6] rounded hover:bg-gray-400"
+                    onClick={() => handleIncrement(item._id)}
+                  >
+                    +
+                  </button>
+                </div>
               </div>
-              
               <button
-                className="w-full bg-[#C3AA80] hover:bg-[#ebe9e4] text-white font-semibold py-2 rounded focus:outline-none transition-colors duration-150 ease-in-out"
-                onClick={() => handleDelete(item._id)} // Pass item._id here
+                className="text-gray-600 hover:text-red-500"
+                onClick={() => handleDelete(item._id)}
               >
-                Delete from Cart
+                <svg className="h-6 w-6 fill-current" viewBox="0 0 24 24">
+                  <path d="M19 13H5v-2h14v2z" />
+                </svg>
               </button>
             </div>
           ))}
-           
         </div>
-      )}
-      <div className=' flex justify-end mt-10'>
-      <p className="text-gray-600 mb-8 text-lg">
-        Total items: <span className="font-bold">{cartItems.length}</span><br/>
-        Total price: <span className="font-bold">${totalPrice.toFixed(2)}</span>
-      </p>
+
+        <div className="px-4 py-3 bg-[#F2EDE6]">
+          <div className="flex justify-between items-center">
+            <span className="font-bold text-lg">Total:</span>
+            <span className="font-bold text-lg">${totalPrice.toFixed(2)}</span>
+          </div>
+          <button className="block w-full mt-4 bg-[#967237] hover:bg-[#966620] text-white font-bold py-2 px-4 rounded">
+            Checkout
+          </button>
+        </div>
       </div>
-      <button  className='bg-[#C3AA80] p-3 rounded-lg w-full'>Order Now</button>
     </div>
-    
   );
 };
 
