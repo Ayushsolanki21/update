@@ -10,7 +10,7 @@ import Cart from './component/Cart';
 import Update from './component/Update';
 import Home from './component/Home';
 import Footer from './component/Footer';
-import AdminRoute from './component/adminepanel/Admin'; // Import AdminPanel
+import AdminRoute from './component/adminepanel/Admin'; 
 import Singeproduct from './component/Singeproduct';
 import Loginprotected from './component/adminepanel/Loginprotected';
 const App = (props) => {
