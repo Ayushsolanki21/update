@@ -23,8 +23,8 @@ const Cart = () => {
     .reduce((total, item) => total + item.price * item.quantity, 0);
 
   return (
-    <div className="p-4 max-w-xl mx-auto z-0">
-      <div className="bg-white shadow-lg rounded-lg mt-10 ">
+    <div className="p-4 max-w-xxl mx-auto z-0 ">
+      <div className="bg-white shadow-lg rounded-lg mt-20 m-10 ">
         <div className="flex items-center justify-between px-4 py-3 bg-[#C3AA80]">
           <h1 className="text-lg font-bold">Shopping Cart</h1>
           <span className="text-[#C3AA80]">({cartItems.length} items)</span>
@@ -74,7 +74,7 @@ const Cart = () => {
             <span className="font-bold text-lg">Total:</span>
             <span className="font-bold text-lg">${totalPrice.toFixed(2)}</span>
           </div>
-          <button className="block w-full mt-4 bg-[#967237] hover:bg-[#966620] text-white font-bold py-2 px-4 rounded">
+          <button className="block w-full mt-4 bg-[#967237] hover:bg-[#966620] text-[white] font-bold py-2 px-4 rounded">
             Checkout
           </button>
         </div>
